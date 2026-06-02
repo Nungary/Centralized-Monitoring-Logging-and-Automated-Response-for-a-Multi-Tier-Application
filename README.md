@@ -99,7 +99,7 @@ Production-grade observability system for a 3-tier AWS application with centrali
 ## 🚀 Deployed Resources Summary
 
 ### Infrastructure
-- **VPC**: `vpc-0bb7132afd9e75e26` (default VPC, 3 subnets)
+- **VPC**: (default VPC, 3 subnets)
 - **Security Groups**: 4 groups (ALB, Web, ECS, RDS)
 - **ALB**: `capstone-7-alb` with 2 target groups
 - **EC2**: 2 instances with CloudWatch Agent
@@ -117,81 +117,97 @@ Production-grade observability system for a 3-tier AWS application with centrali
 ### 1. Infrastructure Components
 
 **Security Groups**
-![Security Groups](./screenshots/01-security-groups.png)
 - 4 security groups with proper ingress/egress rules
 - ALB allows HTTP from internet
 - Web/ECS tiers accept traffic from ALB only
 - RDS accepts MySQL from Web and ECS tiers
+  
+<img width="1919" height="953" alt="Screenshot 2026-05-29 180237" src="https://github.com/user-attachments/assets/8026a031-230d-49d0-8721-dbb26c760671" />
 
 **EC2 Instances**
 ![EC2 Instances](./screenshots/02-ec2-instances.png)
 - 2 running instances: `capstone-7-web-1`, `capstone-7-web-2`
 - CloudWatch Agent installed and running
 - IAM role attached for CloudWatch permissions
+  <img width="1919" height="956" alt="Screenshot 2026-05-29 182828" src="https://github.com/user-attachments/assets/9b3d641d-4137-44aa-8413-23ffa846671c" />
+
 
 **Application Load Balancer**
-![ALB](./screenshots/03-alb.png)
 - DNS name for public access
 - Listeners on port 80 (web) and 8080 (ECS)
 - Active and provisioning state
+  
+<img width="1919" height="962" alt="Screenshot 2026-05-29 182447" src="https://github.com/user-attachments/assets/e7f25914-bc1b-4c0f-9c4e-02aa93ca4a68" />
 
 **Target Groups**
-![Target Groups](./screenshots/04-target-groups.png)
+![Target Groups]
 - Web target group: 2 healthy EC2 instances
 - ECS target group: 2 healthy IP targets
+  
+<img width="1919" height="961" alt="Screenshot 2026-05-29 182903" src="https://github.com/user-attachments/assets/bdfda2c1-fff1-4589-b202-e75824f64774" />
 
 **ECS Cluster & Service**
-![ECS Cluster](./screenshots/05-ecs-cluster.png)
+![ECS Cluster]
 - Fargate cluster with active service
 - 2 running tasks
 - Service auto-scaling configured
+- 
+  <img width="1919" height="962" alt="Screenshot 2026-05-29 191644" src="https://github.com/user-attachments/assets/87b68b19-df41-4220-bba3-08bc7a35bdab" />
+
 
 **ECS Task Definition**
-![ECS Task](./screenshots/06-ecs-task-definition.png)
 - Container: httpd (application)
 - Sidecar: X-Ray daemon for tracing
 - CloudWatch Logs integration
+  <img width="1919" height="957" alt="Screenshot 2026-05-29 184155" src="https://github.com/user-attachments/assets/ca796fb9-f73c-4801-ba5d-5968a04281af" />
+
 
 **RDS Database**
-![RDS](./screenshots/07-rds-database.png)
 - MySQL 8.4.8, db.t3.micro
 - Multi-AZ disabled (cost optimization)
 - Enhanced monitoring enabled
+<img width="1919" height="958" alt="image" src="https://github.com/user-attachments/assets/2d0aa840-7c3b-4fad-9e5f-ce5af08535c7" />
 
 ---
 
 ### 2. Monitoring & Logging
 
 **CloudWatch Dashboard**
-![Dashboard](./screenshots/08-cloudwatch-dashboard.png)
 - Widget 1: ALB RequestCount and 5XX errors
 - Widget 2: ECS CPU and Memory utilization
 - Widget 3: RDS connections and latency
 - Widget 4: Alarm status (all OK)
+  <img width="1919" height="848" alt="Screenshot 2026-05-29 202008" src="https://github.com/user-attachments/assets/99d12e62-7ead-4ba3-9fcb-a4ab7fc395ef" />
+
 
 **CloudWatch Alarms**
-![Alarms](./screenshots/09-cloudwatch-alarms.png)
 - `capstone-7-ecs-high-cpu`: ECS CPU > 80%
 - `capstone-7-alb-high-5xx`: ALB 5xx > 5
 - `capstone-7-error-count-high`: Errors > 10 in 5min
+  <img width="1919" height="956" alt="Screenshot 2026-05-29 192102" src="https://github.com/user-attachments/assets/2cd74e09-99b6-4353-a994-4038dc30e7b7" />
+
 
 **CloudWatch Log Groups**
 ![Log Groups](./screenshots/10-log-groups.png)
 - `/ecs/capstone-7-app`: ECS container logs
 - `/aws/ec2/capstone-7/web/access`: Apache access logs
 - `/aws/ec2/capstone-7/web/error`: Apache error logs
+  <img width="1919" height="955" alt="image" src="https://github.com/user-attachments/assets/3a7d6081-0801-4fc9-9594-95d3ca24c405" />
+
 
 **CloudWatch Logs Insights**
-![Logs Insights](./screenshots/11-logs-insights.png)
 - Saved query: ECS Error Spike Detection
 - Saved query: Top Error Messages
 - Saved query: Request Latency Analysis
+  <img width="1919" height="963" alt="Screenshot 2026-05-29 201207" src="https://github.com/user-attachments/assets/abefc546-eb1f-45f6-8654-3924d71978a1" />
+
 
 **Kinesis Firehose**
-![Firehose](./screenshots/12-kinesis-firehose.png)
 - Delivery stream: `capstone-7-logs-stream`
 - Destination: S3 bucket with GZIP compression
 - Buffering: 5MB or 300 seconds
+  <img width="1919" height="966" alt="Screenshot 2026-05-29 192326" src="https://github.com/user-attachments/assets/6f9954e5-38e8-4a9d-a9e2-ced7c36678ed" />
+
 
 **S3 Centralized Logs**
 ![S3 Bucket](./screenshots/13-s3-logs.png)
