@@ -1,0 +1,53 @@
+{
+  "family": "capstone-7-app-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::430287290736:role/capstone-7-ecs-task-execution-role",
+  "taskRoleArn": "arn:aws:iam::430287290736:role/capstone-7-ecs-task-role",
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "httpd:2.4",
+      "cpu": 128,
+      "memory": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/capstone-7-app",
+          "awslogs-region": "eu-west-1",
+          "awslogs-stream-prefix": "app"
+        }
+      }
+    },
+    {
+      "name": "xray-daemon",
+      "image": "public.ecr.aws/xray/aws-xray-daemon:latest",
+      "cpu": 128,
+      "memory": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 2000,
+          "protocol": "udp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/capstone-7-app",
+          "awslogs-region": "eu-west-1",
+          "awslogs-stream-prefix": "xray"
+        }
+      }
+    }
+  ]
+}
