@@ -210,22 +210,28 @@ Production-grade observability system for a 3-tier AWS application with centrali
 
 
 **S3 Centralized Logs**
-![S3 Bucket](./screenshots/13-s3-logs.png)
 - Bucket: `capstone-7-logs-430287290736`
-- Partitioned by date: `logs/year=YYYY/month=MM/day=DD/`
+- 
+  <img width="1907" height="959" alt="image" src="https://github.com/user-attachments/assets/3a47e7bb-7d46-4751-a433-5667284a65de" />
+
 
 **RDS Enhanced Monitoring**
 ![RDS Monitoring](./screenshots/14-rds-enhanced-monitoring.png)
 - OS-level metrics: Free Memory, Active Memory, CPU
 - 60-second granularity
 - Monitoring role: `rds-monitoring-role`
+  <img width="1919" height="1023" alt="Screenshot 2026-05-29 202327" src="https://github.com/user-attachments/assets/0c890c41-5452-4916-a0d3-0a6d1378de59" />
+
 
 **RDS Log Exports**
-![RDS Logs](./screenshots/15-rds-log-exports.png)
 - Error log: Enabled
 - Slow query log: Enabled
 - General log: Enabled
 - Audit log: Enabled
+  <img width="1919" height="1018" alt="Screenshot 2026-05-29 202429" src="https://github.com/user-attachments/assets/2cabead0-eed3-4dc0-b1cd-223d8e3eb443" />
+  
+<img width="1918" height="955" alt="Screenshot 2026-06-02 142305" src="https://github.com/user-attachments/assets/60dd2963-c5b7-466f-a977-0dead649efd8" />
+
 
 ---
 
@@ -234,26 +240,36 @@ Production-grade observability system for a 3-tier AWS application with centrali
 **Lambda Functions**
 ![Lambda](./screenshots/16-lambda-functions.png)
 - `capstone-7-restart-ecs-task`: Auto-restart failing tasks
+  <img width="1919" height="952" alt="Screenshot 2026-05-29 193834" src="https://github.com/user-attachments/assets/2ff0d554-01d7-43e8-8bde-6eb102ec865b" />
+
 - `capstone-7-notify-oncall`: Format alarm notifications
+  <img width="1919" height="956" alt="Screenshot 2026-05-29 194441" src="https://github.com/user-attachments/assets/513144e4-bb76-451b-96a0-b9f97fb49129" />
+
 - `capstone-7-tag-ec2-investigate`: Tag instances for review
+  <img width="1919" height="958" alt="Screenshot 2026-05-29 194644" src="https://github.com/user-attachments/assets/2206eee2-9dc5-4db8-b365-7423bec9b1ae" />
+
 
 **Lambda Execution Logs**
 ![Lambda Logs](./screenshots/17-lambda-execution.png)
 - CloudWatch logs showing successful task restart
 - SNS notification sent
 - Execution time and memory usage
+  <img width="1919" height="888" alt="Screenshot 2026-06-02 141937" src="https://github.com/user-attachments/assets/df6ad5de-55a2-479a-a8a1-2a0d6be50ca4" />
+
 
 **ECS Service Events**
-![ECS Events](./screenshots/18-ecs-service-events.png)
 - Task stopped by Lambda automation
 - New task started automatically
 - Service reached steady state
+<img width="1919" height="1023" alt="Screenshot 2026-06-02 141317" src="https://github.com/user-attachments/assets/fc4e6a1f-39ce-49e8-9048-afb225f8bdc0" />
 
 **SNS Email Notification**
 ![SNS](./screenshots/19-sns-notification.png)
 - Email subscription confirmed
 - Alarm notification received
 - Detailed alert information
+  <img width="1533" height="868" alt="Screenshot 2026-06-02 141816" src="https://github.com/user-attachments/assets/07141d00-123e-42a5-82ae-6b6d258754fb" />
+
 
 ---
 
@@ -261,15 +277,14 @@ Production-grade observability system for a 3-tier AWS application with centrali
 
 **Web Server Response (EC2)**
 ![Web 1](./screenshots/20-web-server-1.png)
+<img width="1915" height="1021" alt="Screenshot 2026-05-29 182934" src="https://github.com/user-attachments/assets/7a3802e5-d321-479e-8b5e-242dd4ade1f9" />
+
 ![Web 2](./screenshots/21-web-server-2.png)
+<img width="1919" height="1019" alt="Screenshot 2026-05-29 182946" src="https://github.com/user-attachments/assets/bd0fb2df-0b96-44b5-8c8f-5aa9061d0ca3" />
+
 - Both EC2 instances serving traffic
 - Load balanced by ALB
 - Apache web server running
-
-**ECS Application Response**
-![ECS App](./screenshots/22-ecs-app-response.png)
-- ECS service accessible on port 8080
-- Container responding to requests
 
 ---
 
@@ -289,10 +304,6 @@ aws lambda invoke --function-name capstone-7-restart-ecs-task --payload '{}' res
 
 ### Test 4: Dashboard
 **Result**: ✅ All 4 widgets displaying real-time metrics
-
-**📁 See [TESTING.md](./TESTING.md) for detailed test procedures**
-
----
 
 ## 📂 Supporting Documentation
 
